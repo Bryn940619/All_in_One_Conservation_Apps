@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildlife Sighting</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+      }
+
+      .page-content {
+        padding: 1rem;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        padding: 1rem;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: transform 0.2s, opacity 0.2s;
+      }
+
+      .btn-green {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      }
+
+      .btn-red {
+        background: linear-gradient(135deg, #c62828, #ef5350);
+      }
+
+      .btn-blue {
+        background: linear-gradient(135deg, #1565c0, #42a5f5);
+      }
+
+      .btn-yellow {
+        background: linear-gradient(135deg, #f9a825, #ffd54f);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-container {
+        background: #fff;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        margin-top: 1rem;
+        background: #38a169;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      button:hover {
+        background: #2f855a;
+      }
+
+      .output {
+        margin-top: 1rem;
+        background: #fff;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      img.preview {
+        max-width: 150px;
+        border-radius: 5px;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #2e541a, #a0dca4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: white;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 10px">
+        <img
+          src="png.monster-142.png"
+          alt="EcoGuard Logo"
+          style="height: 40px; width: auto"
+        />
+        <h1 style="margin: 0; font-family: Arial, sans-serif">EcoGuard</h1>
+      </div>
+      <nav>
+        <a
+          href="index.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Home</a
+        >
+        <a
+          href="about.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >About</a
+        >
+        <a
+          href="contact.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Contact</a
+        >
+      </nav>
+    </header>
+
+    <div class="page-content" style="padding-top: 70px">
+      <div class="actions">
+        <a href="wildlife.html" class="btn btn-green">Wildlife Sighting</a>
+        <a href="threats.html" class="btn btn-red">Threat Monitoring</a>
+        <a href="gis.html" class="btn btn-blue">GIS Mapping</a>
+        <a href="reports.html" class="btn btn-yellow">Reports & Logs</a>
+        <a href="species.html" class="btn btn-yellow">Species Tracker</a>
+      </div>
+
+      <div class="form-container">
+        <h3>Log Wildlife Sighting</h3>
+        <form id="sightingForm">
+          <label>Species Name:</label>
+          <input
+            type="text"
+            id="species"
+            placeholder="Enter species name"
+            required
+          />
+
+          <label>Photo:</label>
+          <input type="file" id="photo" accept="image/*" />
+
+          <label>Notes:</label>
+          <textarea id="notes" placeholder="Enter notes"></textarea>
+
+          <label>Location:</label>
+          <input type="text" id="latitude" placeholder="Latitude" readonly />
+          <input type="text" id="longitude" placeholder="Longitude" readonly />
+
+          <label>Date & Time:</label>
+          <input type="text" id="datetime" readonly />
+
+          <button type="submit">Submit Sighting</button>
+        </form>
+      </div>
+
+      <div id="output" class="output" style="display: none">
+        <h3>Sighting Logged:</h3>
+        <p><strong>Species:</strong> <span id="outSpecies"></span></p>
+        <p><strong>Date & Time:</strong> <span id="outDatetime"></span></p>
+        <p><strong>Location:</strong> <span id="outLocation"></span></p>
+        <p><strong>Notes:</strong> <span id="outNotes"></span></p>
+        <img id="outPhoto" class="preview" />
+      </div>
+    </div>
+
+    <script>
+      // Auto-fill date/time
+      document.getElementById("datetime").value = new Date().toLocaleString();
+
+      // Get GPS location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          document.getElementById("latitude").value =
+            position.coords.latitude.toFixed(6);
+          document.getElementById("longitude").value =
+            position.coords.longitude.toFixed(6);
+        });
+      } else {
+        alert("Geolocation not supported by your browser.");
+      }
+
+      // Save log to localStorage
+      function saveLog(log) {
+        let logs = JSON.parse(localStorage.getItem("ecoguardLogs")) || [];
+        logs.push(log);
+        localStorage.setItem("ecoguardLogs", JSON.stringify(logs));
+      }
+
+      // Handle form submission
+      document
+        .getElementById("sightingForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const log = {
+            type:
+              "Wildlife Sighting - " + document.getElementById("species").value,
+            datetime: document.getElementById("datetime").value,
+            location:
+              document.getElementById("latitude").value +
+              ", " +
+              document.getElementById("longitude").value,
+            notes: document.getElementById("notes").value,
+            photo: "",
+          };
+
+          const file = document.getElementById("photo").files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              log.photo = event.target.result;
+              saveLog(log);
+              showOutput(log);
+            };
+            reader.readAsDataURL(file);
+          } else {
+            saveLog(log);
+            showOutput(log);
+          }
+        });
+
+      function showOutput(log) {
+        document.getElementById("outSpecies").innerText = log.type.replace(
+          "Wildlife Sighting - ",
+          ""
+        );
+        document.getElementById("outDatetime").innerText = log.datetime;
+        document.getElementById("outLocation").innerText = log.location;
+        document.getElementById("outNotes").innerText = log.notes;
+        if (log.photo) document.getElementById("outPhoto").src = log.photo;
+        document.getElementById("output").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

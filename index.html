@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoGuard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+        padding-top: 70px; /* Prevent header overlap */
+      }
+
+      /* ===== HEADER ===== */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #2e541a, #a0dca4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: white;
+        flex-wrap: wrap;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      nav {
+        display: flex;
+        gap: 10px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
+      /* Hamburger button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+      }
+
+      .menu-toggle span {
+        background: white;
+        height: 3px;
+        width: 25px;
+        border-radius: 2px;
+      }
+
+      /* Mobile nav hidden by default */
+      @media (max-width: 768px) {
+        nav {
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          right: 0;
+          background: linear-gradient(90deg, #2e541a, #a0dca4);
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+          padding: 0;
+        }
+
+        nav.show {
+          max-height: 300px;
+          padding: 10px 0;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+      }
+
+      /* ===== MAP ===== */
+      #map {
+        height: 60vh;
+        width: 90%;
+        margin: 1rem auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ===== LEGEND ===== */
+      .legend {
+        background: white;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .legend img {
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+
+      .legend-toggle {
+        background: #2f855a;
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+
+      /* ===== ACTION BUTTONS ===== */
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+        padding: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        margin: 1rem auto;
+        width: 90%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        padding: 1rem;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: transform 0.2s, opacity 0.2s;
+      }
+
+      .btn-green {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      }
+      .btn-red {
+        background: linear-gradient(135deg, #c62828, #ef5350);
+      }
+      .btn-blue {
+        background: linear-gradient(135deg, #1565c0, #42a5f5);
+      }
+      .btn-yellow {
+        background: linear-gradient(135deg, #f9a825, #ffd54f);
+      }
+
+      @media (max-width: 768px) {
+        #map {
+          height: 50vh;
+          width: 95%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        header h1 {
+          font-size: 1.2rem;
+        }
+        .btn {
+          padding: 0.8rem;
+          font-size: 0.9rem;
+        }
+        .legend {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <img
+          src="png.monster-142.png"
+          alt="EcoGuard Logo"
+          style="height: 40px; width: auto"
+        />
+        <h1>EcoGuard</h1>
+      </div>
+
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </header>
+
+    <div id="map"></div>
+
+    <div class="actions">
+      <a href="wildlife.html" class="btn btn-green">Wildlife Sighting</a>
+      <a href="threats.html" class="btn btn-red">Threat Monitoring</a>
+      <a href="gis.html" class="btn btn-blue">GIS Mapping</a>
+      <a href="reports.html" class="btn btn-yellow">Reports & Logs</a>
+      <a href="species.html" class="btn btn-yellow">Species Tracker</a>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      function toggleMenu() {
+        document.getElementById("navbar").classList.toggle("show");
+      }
+
+      var map = L.map("map").setView([-32.25, 22.4167], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      var sightingIcon = L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -28],
+      });
+
+      var threatIcon = L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/565/565547.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -28],
+      });
+
+      var sightings = [
+        {
+          lat: -32.2505,
+          lng: 22.4165,
+          title: "Lion Sighting",
+          type: "sighting",
+          date: "2025-08-06",
+          time: "14:30",
+          reportedBy: "Ranger Bryn",
+          img: "https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg",
+        },
+        {
+          lat: -32.26,
+          lng: 22.42,
+          title: "Black Rhino Threat Alert",
+          type: "threat",
+          date: "2025-08-05",
+          time: "06:30",
+          reportedBy: "Ranger Ralushe",
+          img: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Black_Rhino_at_Working_with_Wildlife.jpg",
+        },
+      ];
+
+      sightings.forEach(function (s) {
+        var icon = s.type === "threat" ? threatIcon : sightingIcon;
+        L.marker([s.lat, s.lng], { icon: icon }).addTo(map).bindPopup(`
+        <b>${s.title}</b><br/>
+        <i>Reported on:</i> ${s.date} at ${s.time || "N/A"}<br/>
+        <i>By:</i> ${s.reportedBy}<br/>
+        <img src="${
+          s.img
+        }" alt="${s.title}" width="100" style="margin-top:5px;border-radius:5px;"/>
+      `);
+      });
+
+      var legendControl = L.control({ position: "topright" });
+      legendControl.onAdd = function (map) {
+        var div = L.DomUtil.create("div", "legend");
+        div.innerHTML = `
+        <div class="legend-toggle" onclick="toggleLegend()">Toggle Legend</div>
+        <p><img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" width="20"/> Wildlife Sighting</p>
+        <p><img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" width="20"/> Threat Alert</p>
+      `;
+        return div;
+      };
+      legendControl.addTo(map);
+
+      function toggleLegend() {
+        const legend = document.querySelector(".legend");
+        legend.style.display =
+          legend.style.display === "none" ? "block" : "none";
+      }
+    </script>
+  </body>
+</html>

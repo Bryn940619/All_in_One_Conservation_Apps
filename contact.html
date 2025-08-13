@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - EcoGuard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+        background: linear-gradient(90deg, #2e541a, #d9e9da);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: white;
+      }
+      header img {
+        height: 40px;
+        width: auto;
+      }
+      h1 {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      main {
+        width: 90%;
+        max-width: 900px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        flex: 1;
+      }
+      h2 {
+        color: #1b5e20;
+        text-align: center;
+      }
+      form {
+        display: grid;
+        gap: 1rem;
+      }
+      input,
+      textarea {
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 100%;
+        font-size: 1rem;
+      }
+      button {
+        padding: 0.8rem 1.2rem;
+        background: linear-gradient(135deg, #1565c0, #42a5f5);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      a.btn-back {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.8rem 1.2rem;
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      footer {
+        text-align: center;
+        padding: 1rem;
+        background: #2e541a;
+        color: white;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #2e541a, #a0dca4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: white;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 10px">
+        <img
+          src="png.monster-142.png"
+          alt="EcoGuard Logo"
+          style="height: 40px; width: auto"
+        />
+        <h1 style="margin: 0; font-family: Arial, sans-serif">EcoGuard</h1>
+      </div>
+      <nav>
+        <a
+          href="index.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Home</a
+        >
+        <a
+          href="about.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >About</a
+        >
+        <a
+          href="contact.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Contact</a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <h2>Contact Us</h2>
+      <p>
+        Have questions, suggestions, or want to collaborate? Get in touch with
+        us below:
+      </p>
+      <form>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </main>
+
+    <footer>
+      &copy; 2025 EcoGuard. Powered by EcoTech Solutions | Bryn Phoshoko.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports & Logs</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+      }
+
+      .page-content {
+        padding: 1rem;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 1rem;
+        background: #fff;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        padding: 1rem;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: transform 0.2s, opacity 0.2s;
+      }
+
+      .btn-green {
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+      }
+
+      .btn-red {
+        background: linear-gradient(135deg, #c62828, #ef5350);
+      }
+
+      .btn-blue {
+        background: linear-gradient(135deg, #1565c0, #42a5f5);
+      }
+
+      .btn-yellow {
+        background: linear-gradient(135deg, #f9a825, #ffd54f);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #3182ce;
+        color: white;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      img.preview {
+        max-width: 80px;
+        border-radius: 5px;
+      }
+
+      .no-data {
+        text-align: center;
+        padding: 1rem;
+        background: rgb(122, 8, 8);
+        border-radius: 10px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background: linear-gradient(90deg, #2e541a, #a0dca4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        color: white;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 10px">
+        <img
+          src="png.monster-142.png"
+          alt="EcoGuard Logo"
+          style="height: 40px; width: auto"
+        />
+        <h1 style="margin: 0; font-family: Arial, sans-serif">EcoGuard</h1>
+      </div>
+      <nav>
+        <a
+          href="index.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Home</a
+        >
+        <a
+          href="about.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >About</a
+        >
+        <a
+          href="contact.html"
+          style="
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+          "
+          >Contact</a
+        >
+      </nav>
+    </header>
+
+    <div class="page-content" style="padding-top: 70px">
+      <div class="actions">
+        <a href="wildlife.html" class="btn btn-green">Wildlife Sighting</a>
+        <a href="threats.html" class="btn btn-red">Threat Monitoring</a>
+        <a href="gis.html" class="btn btn-blue">GIS Mapping</a>
+        <a href="reports.html" class="btn btn-yellow">Reports & Logs</a>
+        <a href="species.html" class="btn btn-yellow">Species Tracker</a>
+      </div>
+
+      <h2>All Reports & Logs</h2>
+      <div id="reportContainer"></div>
+    </div>
+
+    <script>
+      function loadReports() {
+        const logs = JSON.parse(localStorage.getItem("ecoguardLogs")) || [];
+        const container = document.getElementById("reportContainer");
+
+        if (logs.length === 0) {
+          container.innerHTML = `<p class="no-data">No reports logged yet.</p>`;
+          return;
+        }
+
+        let table = `<table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Date & Time</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Photo</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+        logs.forEach((log) => {
+          table += `<tr>
+          <td>${log.type}</td>
+          <td>${log.datetime}</td>
+          <td>${log.location}</td>
+          <td>${log.description || "N/A"}</td>
+          <td>${
+            log.photo
+              ? `<img src="${log.photo}" class="preview" />`
+              : "No photo"
+          }</td>
+        </tr>`;
+        });
+
+        table += `</tbody></table>`;
+        container.innerHTML = table;
+      }
+
+      loadReports();
+    </script>
+  </body>
+</html>
